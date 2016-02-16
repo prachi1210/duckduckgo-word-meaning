@@ -1,7 +1,20 @@
+<html>
+	<head>
+		<title>DuckDuckGo Word Meaning</title>
+	</head>
+	<body bgcolor="#98AFC7" font face ="Tw Cen MT" color="#151b54">
+
+		<center>			
+			<h1><font face ="Tw Cen MT" color="#151b54">Word Definition</h1>
+			<h3><font face ="Tw Cen MT" color="#151b54">Powered By</h3>
+			<img src="images/abc.png" alt="DuckDuckGo" >
+		</center>
+		<br>
+	</html>
+
 <?php
-
 	require_once 'functionc.php';
-
+	
 	$word=$_POST['word'];
 	//echo $word;
 	$url='https://api.duckduckgo.com/?format=json&pretty=1&q='.$word;
