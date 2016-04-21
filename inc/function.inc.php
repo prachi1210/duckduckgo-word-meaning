@@ -1,6 +1,6 @@
 <?php
-	function get_curl($url)
-	{
+
+	function get_curl($url){
 		$curl_handle=curl_init();
 		
 		curl_setopt($curl_handle, CURLOPT_URL, $url);
@@ -15,5 +15,3 @@
 
 		return $result;
 	}
-?>
-		
