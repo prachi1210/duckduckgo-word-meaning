@@ -20,9 +20,7 @@
 					$freq = $query_row['freq'];
 					$freq+=1;
 					$q2="UPDATE `words` SET `freq`='$freq' WHERE `word`='$word'";
-					if(mysqli_query($connection,$q2))
-					echo"I am here";
-
+					(mysqli_query($connection,$q2));	
 				}
 			}
 			else 
@@ -57,6 +55,16 @@
 				}
 			}
 		}
+		$q3="SELECT `word`, MAX(freq) FROM `words`";
+		if($query_run = mysqli_query($connection,$q3))
+		{
+			while($row = mysqli_fetch_assoc($query_run)){
+				
+				
+				echo "<br><br>"."Word with max search frequency : ". $row['word']. " with frequency ". $row['MAX(freq)'];
+			}				
+		} 
+
 		die;
 	}
 
