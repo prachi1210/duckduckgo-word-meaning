@@ -2,7 +2,6 @@
 
 	require_once 'inc/connection.inc.php';
 	require_once 'inc/function.inc.php';
-
 ?>
 <!doctype html>
 <html>
@@ -54,6 +53,8 @@
 		<img src="images/abc.png" alt="DuckDuckGo" >
 	</center>
 	<br>
+
+
 	<table width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#cccccc">
 		<tr>
 			<form method="POST">
@@ -98,7 +99,8 @@
 					$freq = $query_row['freq'];
 					$freq+=1;
 					$q2="UPDATE `words` SET `freq`='$freq' WHERE `word`='$word'";
-					(mysqli_query($connection,$q2));	
+					(mysqli_query($connection,$q2));
+						
 				}
 			}
 			else 
@@ -116,7 +118,11 @@
 		
 		$json = file_get_contents($url);
 		$obj = json_decode($json, true);
-		echo $obj["Heading"];
+		
+		if($obj["Heading"] == "")
+			echo "No meaning found";
+		else
+			echo $obj["Heading"];
 		
 		foreach ($obj as $key => $value) 
 		{
@@ -132,15 +138,14 @@
 					}
 				}
 			}
-		}
-		$q3="SELECT `word`, MAX(freq) FROM `words`";
+		}			
+				
+		echo "<br><br>"."<b>Frequency of search of </b><i>". $word. "</i><b> is </b>". $freq."</i>";
+		$q3="SELECT * FROM `words` ORDER BY `freq` DESC";
 		if($query_run = mysqli_query($connection,$q3))
 		{
-			while($row = mysqli_fetch_assoc($query_run)){
-				
-				
-				echo "<br><br>"."<b>Word with max search frequency : </b><i>". $row['word']. "</i><b> with frequency </b>". $row['MAX(freq)']."</i";
-			}				
+			$row = mysqli_fetch_assoc($query_run);	//select first row	
+				echo "<br><br>"."<b>Word with max search frequency : </b><i>". $row['word']. "</i><b> with frequency </b>". $row['freq']."</i";				
 		} 
 
 		die;
