@@ -3,71 +3,6 @@
 	require_once 'inc/connection.inc.php';
 	require_once 'inc/function.inc.php';
 
-	if(!isset($_POST['word']))
-		header("Location : index.php");
-	else 
-	{
-		
-		$word=$_POST['word'];
-		$q1 = "SELECT `freq` FROM `words` WHERE `word`='$word'";
-		
-		if($query_run = mysqli_query($connection,$q1))
-		{
-			
-			if(mysqli_num_rows($query_run) == 1 )
-			{
-					while($query_row = mysqli_fetch_assoc($query_run)){
-					$freq = $query_row['freq'];
-					$freq+=1;
-					$q2="UPDATE `words` SET `freq`='$freq' WHERE `word`='$word'";
-					(mysqli_query($connection,$q2));	
-				}
-			}
-			else 
-			{
-				
-				$freq=1;
-				$q2= "INSERT INTO `words` (`word`,`freq`) VALUES ('$word','$freq')";
-				(mysqli_query($connection,$q2));
-			}		
-			
-		} 
-		
-
-		$url='https://api.duckduckgo.com/?format=json&pretty=1&q='.$word;
-		
-		$json = file_get_contents($url);
-		$obj = json_decode($json, true);
-		echo $obj["Heading"];
-		
-		foreach ($obj as $key => $value) 
-		{
-			if($key=="RelatedTopics")
-			{
-
-				foreach ($value as $k1 => $v1)
-				{
-					if($k1=="Text")
-					{
-						echo "<br>";
-						print $v1["Result"];
-					}
-				}
-			}
-		}
-		$q3="SELECT `word`, MAX(freq) FROM `words`";
-		if($query_run = mysqli_query($connection,$q3))
-		{
-			while($row = mysqli_fetch_assoc($query_run)){
-				
-				
-				echo "<br><br>"."Word with max search frequency : ". $row['word']. " with frequency ". $row['MAX(freq)'];
-			}				
-		} 
-
-		die;
-	}
-
 ?>
 <!doctype html>
 <html>
@@ -145,3 +80,70 @@
 	</table>
 </body>
 </html>
+<?php
+	if(!isset($_POST['word']))
+		header("Location : index.php");
+	else 
+	{
+		
+		$word=$_POST['word'];
+		$q1 = "SELECT `freq` FROM `words` WHERE `word`='$word'";
+		
+		if($query_run = mysqli_query($connection,$q1))
+		{
+			
+			if(mysqli_num_rows($query_run) == 1 )
+			{
+					while($query_row = mysqli_fetch_assoc($query_run)){
+					$freq = $query_row['freq'];
+					$freq+=1;
+					$q2="UPDATE `words` SET `freq`='$freq' WHERE `word`='$word'";
+					(mysqli_query($connection,$q2));	
+				}
+			}
+			else 
+			{
+				
+				$freq=1;
+				$q2= "INSERT INTO `words` (`word`,`freq`) VALUES ('$word','$freq')";
+				(mysqli_query($connection,$q2));
+			}		
+			
+		} 
+		
+
+		$url='https://api.duckduckgo.com/?format=json&pretty=1&q='.$word;
+		
+		$json = file_get_contents($url);
+		$obj = json_decode($json, true);
+		echo $obj["Heading"];
+		
+		foreach ($obj as $key => $value) 
+		{
+			if($key=="RelatedTopics")
+			{
+
+				foreach ($value as $k1 => $v1)
+				{
+					if($k1=="Text")
+					{
+						echo "<br>";
+						print $v1["Result"];
+					}
+				}
+			}
+		}
+		$q3="SELECT `word`, MAX(freq) FROM `words`";
+		if($query_run = mysqli_query($connection,$q3))
+		{
+			while($row = mysqli_fetch_assoc($query_run)){
+				
+				
+				echo "<br><br>"."<b>Word with max search frequency : </b><i>". $row['word']. "</i><b> with frequency </b>". $row['MAX(freq)']."</i";
+			}				
+		} 
+
+		die;
+	}
+
+?>
