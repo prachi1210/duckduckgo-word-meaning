@@ -1,9 +1,41 @@
 <?php
 
+	require_once 'inc/connection.inc.php';
 	require_once 'inc/function.inc.php';
 
-	if(isset($_POST['word'])){
+	if(!isset($_POST['word']))
+		header("Location : index.php");
+	else 
+	{
+		
 		$word=$_POST['word'];
+		$q1 = "SELECT `freq` FROM `words` WHERE `word`='$word'";
+		
+		if($query_run = mysqli_query($connection,$q1))
+		{
+			
+			if(mysqli_num_rows($query_run) == 1 )
+			{
+					while($query_row = mysqli_fetch_assoc($query_run)){
+					$freq = $query_row['freq'];
+					$freq+=1;
+					$q2="UPDATE `words` SET `freq`='$freq' WHERE `word`='$word'";
+					if(mysqli_query($connection,$q2))
+					echo"I am here";
+
+				}
+			}
+			else 
+			{
+				
+				$freq=1;
+				$q2= "INSERT INTO `words` (`word`,`freq`) VALUES ('$word','$freq')";
+				(mysqli_query($connection,$q2));
+			}		
+			
+		} 
+		
+
 		$url='https://api.duckduckgo.com/?format=json&pretty=1&q='.$word;
 		
 		$json = file_get_contents($url);
