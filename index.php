@@ -4,6 +4,9 @@
 	require_once 'inc/function.inc.php';
 	include('inc/layout/header.inc.php');
 	include('inc/layout/navbar.inc.php');
+
+	error_reporting(E_ERROR);
+
 	if(!isset($_POST['word']))
 		header("Location : index.php");
 	else 
@@ -41,9 +44,9 @@
 		$obj = json_decode($json, true);
 		
 		if($obj["Heading"] == "")
-			echo "No meaning found";
+			$heading ="No meaning found";
 		else
-			echo $obj["Heading"];
+			$heading = $obj["Heading"];
 		
 		foreach ($obj as $key => $value) 
 		{
@@ -54,23 +57,40 @@
 				{
 					if($k1=="Text")
 					{
-						echo "<br>";
-						print $v1["Result"];
+						$meaning= $v1["Result"];
 					}
 				}
 			}
 		}					
-		echo "<br><br>"."<b>Frequency of search of </b><i>". $word. "</i><b> is </b>". $freq."</i>";
-		$q3="SELECT * FROM `words` ORDER BY `freq` DESC";
-		if($query_run = mysqli_query($connection,$q3))
-		{
-			$row = mysqli_fetch_assoc($query_run);	//select first row	
-				echo "<br><br>"."<b>Word with max search frequency : </b><i>". $row['word']. "</i><b> with frequency </b>". $row['freq']."</i";				
-		} 
-		die;
 	}
+	
 ?>
-	<div class="container">
+
+<article>
+<div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <?php 
+	                if(isset($heading))
+	                 	{
+	                 		echo "<br>Search result: <b>".$heading."</b><br><hr>".$meaning;
+	                 		echo "<br><br>"."<b>Frequency of search of </b><i>". $word. "</i><b> is </b>". $freq."</i>";
+							$q3="SELECT * FROM `words` ORDER BY `freq` DESC";
+							if($query_run = mysqli_query($connection,$q3))
+							{
+								$row = mysqli_fetch_assoc($query_run);	//select first row	
+								echo "<br><br>"."<b>Word with max search frequency : </b><i>". $row['word']. "</i><b> with frequency </b>". $row['freq']."</i";				
+							} 
+						} 
+				?>
+            </div>
+        </div>
+</div>
+</article>
+
+<hr><br><br>
+
+<div class="container">
     <table width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#cccccc">
         <tr>
             <form method="POST" >
