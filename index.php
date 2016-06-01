@@ -2,8 +2,8 @@
 
 	require_once 'inc/connection.inc.php';
 	require_once 'inc/function.inc.php';
-	include('inc/header.inc.php');
-	include('inc/body.inc.php');
+	include('inc/layout/header.inc.php');
+	include('inc/layout/navbar.inc.php');
 	if(!isset($_POST['word']))
 		header("Location : index.php");
 	else 
@@ -70,28 +70,33 @@
 		die;
 	}
 ?>
-	<table width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#cccccc">
-		<tr>
-			<form method="POST">
-				<td>
-					<table width="100%" border="0"  cellspacing="1" bgcolor="#ffffff">
-						<tr>
-							<td colspan="3"><strong><center>Enter word definition to search</cemter></strong></td>
-						</tr>
-						<tr>
-							<td width="78">Word</td>
-							<td width="6">:</td>
-							<td width="294"><input name="word" type="text" id="word"></td>
-						</tr>
-						<tr></tr>
-						<tr>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td><input type="submit" name="Submit" value="GO"></td>
-						</tr>
-					</table>
-				</td>
-			</form>
-		</tr>
-	</table>
+	<div class="container">
+    <table width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#cccccc">
+        <tr>
+            <form method="POST" >
+                <td>
+                    <table width="100%" border="0"  cellspacing="1" bgcolor="#ffffff">
+                        <tr>
+                            <td colspan="3"><strong><center>Enter word meaning to search</cemter></strong></td>
+                        </tr>
+                        <tr>
+                            <td width="78">Word</td>
+                            <td width="6">:</td>
+                            <td width="294"><input name="word" type="text" id="word"></td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td><input type="submit" name="Submit" value="GO"></td>
+                         </tr>
+                    </table>
+                </td>
+            </form>
+        </tr>
+    </table>
+</div>
+    <hr>
+
+<?php include 'inc/layout/footer.inc.php';?>
 	

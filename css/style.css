@@ -1,0 +1,24 @@
+@import url(https://fonts.googleapis.com/css?family=Slabo+27px|Roboto);
+
+body {
+	font-family: 'Roboto', sans-serif;
+	background-image: url(../img/superheroes-collage-16289.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+.head {
+    background-color: white;
+    margin: 0;
+    padding: 1%;
+    text-align: center;
+}
+
+
+.fork-github {
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 1200;
+	width: 180px;
+}
