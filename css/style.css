@@ -2,9 +2,12 @@
 
 body {
 	font-family: 'Roboto', sans-serif;
-	background-image: url(../img/superheroes-collage-16289.jpg);
+	
 	background-attachment: fixed;
 	background-size: cover;
+	background-color: #D9DBD5;
+    padding-top: 70px;
+}
 }
 
 .head {
@@ -22,3 +25,4 @@ body {
 	z-index: 1200;
 	width: 180px;
 }
+
